@@ -17,7 +17,7 @@
 	    return result;
 	};
 
-	var subScriptArray = new Array('8320', '8321', '8322', '8323', '8324', '8325', '8326', '8327', '8328', '8329', '8330', '8331', '8332', '8333', '8334', '8336', '8337', '8338', '8339', '8341', '8342', '8343', '8344', '8345', '8346', '8347', '8348');
+	var subScriptArray = new Array('8320', '8321', '8322', '8323', '8324', '8325', '8326', '8327', '8328', '8329', '8330', '8331', '8332', '8333', '8334', '8336', '8337', '8338', '8339', '8340', 'k', 'i', 'm', 'n', 'p', 's', 't');
 
 	var superScriptArray = new Array('8304;', '&sup1;', '&sup2;', '&sup3;', '8308', '8309', '8310', '8311', '8312', '8313', '8314', '8315', '8316', '8317', '8318', 'a', 'e', 'o', 'x', 'h', 'k', 'i', 'm', '8319', 'p', 's', 't');
 
@@ -25,7 +25,7 @@
 
 	$.convertHTML2UTF = function(param) { 
 		var refinedStr = '';
-		param.split(/(<sub>.*?<\/sub>)|(<sup>.*?<\/sup>)/).map(function(val){
+		$.map(param.split(/(<sub>.*?<\/sub>)|(<sup>.*?<\/sup>)/), function(val){
 			if (val !== undefined) {
 				if (val.indexOf('<sub>')!=-1) {
 					val = $.trim(val.replace(/<\/?sub>/g,''));
@@ -38,7 +38,9 @@
 						if (c != -1) {
 							tempValue = '';
 							c = subScriptArray[c];
-							c = String.fromCharCode(c);
+							if ($.isNumeric(c)) {
+								c = String.fromCharCode(c);
+							}
 							tempValue = tempValue + c;
 						};
 					}
@@ -53,12 +55,10 @@
 						c = scriptText.indexOf(c);
 						if (c != -1) {
 							tempValue = '';
-							if (c != 1 & c != 2 & c!= 3) {
-								c = superScriptArray[c];
+							c = superScriptArray[c];
+							if ($.isNumeric(c)) {
 								c = String.fromCharCode(c);
-							}else{
-								c = superScriptArray[c];
-							};
+							}
 							tempValue = tempValue + c;
 						};
 					}
